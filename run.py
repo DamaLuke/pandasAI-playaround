@@ -17,7 +17,8 @@ sys.path.insert(0, str(project_root))
 from backend.main import app
 from backend.config import get_settings
 
-if __name__ == "__main__":
+def main():
+    """项目启动入口"""
     import uvicorn
 
     settings = get_settings()
@@ -29,16 +30,16 @@ if __name__ == "__main__":
     print(f"   环境: {'development' if debug else 'production'}")
     print(f"   地址: http://{settings.host}:{settings.port}")
     print(f"   文档: http://{settings.host}:{settings.port}/docs")
-
-    # 使用随机端口避免冲突
-    port = 8000
-
-    print("open http://localhost:8000")
+    print(f"open http://localhost:{settings.port}")
 
     uvicorn.run(
         "backend.main:app",
         host=settings.host,
-        port=port,
+        port=settings.port,
         reload=debug,
         workers=1 if debug else settings.workers,
     )
+
+
+if __name__ == "__main__":
+    main()

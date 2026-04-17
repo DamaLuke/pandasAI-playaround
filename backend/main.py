@@ -117,15 +117,3 @@ def create_application() -> FastAPI:
 
 # Create application instance
 app = create_application()
-
-if __name__ == "__main__":
-    import uvicorn
-
-    settings = get_settings()
-    uvicorn.run(
-        "backend.main:app",
-        host=settings.host,
-        port=settings.port,
-        reload=settings.debug,
-        workers=1 if settings.debug else settings.workers,
-    )
