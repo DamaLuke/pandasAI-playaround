@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatExcel - AI数据分析助手</title>
+    <!-- 外部库 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 头部导航 -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <span class="logo-text">ChatExcel</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">使用指南</a>
+                <a href="#" class="nav-link">关于</a>
+            </nav>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-container">
+            <!-- 左侧面板：数据上传 -->
+            <aside class="sidebar">
+                <section class="upload-section">
+                    <h3>📤 上传数据文件</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" hidden>
+                        <div class="upload-placeholder">
+                            <span class="upload-icon">⬆️</span>
+                            <p>点击或拖拽文件到此处</p>
+                            <p class="upload-hint">支持 .xlsx, .xls, .csv 格式</p>
+                        </div>
+                    </div>
+                    <div id="uploadStatus" class="upload-status hidden"></div>
+                </section>
+
+                <section class="data-preview hidden" id="dataPreview">
+                    <h3>📋 数据预览</h3>
+                    <div class="sheet-selector">
+                        <div class="sheet-select-header">
+                            <label>选择工作表（可多选）：</label>
+                            <button type="button" class="sheet-select-all-btn" id="sheetSelectAll">全选</button>
+                        </div>
+                        <div class="sheet-checkbox-list" id="sheetSelect"></div>
+                    </div>
+                    <div class="table-container">
+                        <table id="previewTable" class="display" style="width:100%">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- 右侧面板：对话界面 -->
+            <section class="chat-panel">
+                <div class="chat-header">
+                    <h3>💬 智能对话</h3>
+                    <span id="sessionStatus" class="session-status">未连接</span>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message system-message">
+                        <div class="message-content">
+                            <p>👋 欢迎使用 ChatExcel！</p>
+                            <p>请先上传数据文件，然后向我提问，我会帮你分析数据、生成图表。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="input-container">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="输入你的问题..."
+                            rows="2"
+                        ></textarea>
+                        <button id="sendBtn" class="send-btn" disabled>
+                            <span>发送</span>
+                        </button>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="quick-btn" data-prompt="查看数据概况">📊 数据概况</button>
+                        <button class="quick-btn" data-prompt="帮我画个柱状图">📈 生成图表</button>
+                        <button class="quick-btn" data-prompt="统计汇总">🔢 统计分析</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <p>ChatExcel - Powered by PandasAI</p>
+        </footer>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>正在处理...</p>
+    </div>
+
+    <!-- 自定义脚本 -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
