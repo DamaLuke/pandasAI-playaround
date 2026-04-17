@@ -10,6 +10,8 @@ export const elements = {
     // 数据预览
     dataPreview: document.getElementById('dataPreview'),
     sheetSelect: document.getElementById('sheetSelect'),
+    sheetConfirmBtn: document.getElementById('sheetConfirmBtn'),
+    sheetCancelBtn: document.getElementById('sheetCancelBtn'),
     previewTable: document.getElementById('previewTable'),
     
     // 对话相关

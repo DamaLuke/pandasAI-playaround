@@ -56,10 +56,16 @@ export const ui = {
             `;
             elements.sheetSelect.appendChild(item);
             state.currentSheets = sheets.length > 0 ? [sheets[0]] : [];
-            // option.value = sheet;
-            // option.textContent = sheet;
-            // elements.sheetSelect.appendChild(option);
+
         });
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'sheet-actions';
+        btnContainer.innerHTML = `
+            <button id="sheetConfirmBtn" class="btn btn-primary btn-sm">确认</button>
+            <button id="sheetCancelBtn" class="btn btn-secondary btn-sm">取消</button>
+        `;
+        elements.sheetSelect.appendChild(btnContainer);
+
     },
 
     // 初始化数据表格

@@ -37,17 +37,12 @@ function init() {
         handlers.handleFileUpload(e.dataTransfer.files[0]);
     });
 
-    // Sheet 多选 — 使用事件委托监听 checkbox 变化
-    elements.sheetSelect.addEventListener('change', (e) => {
-        handlers.syncSelectedSheets();
-    });
-
     // 全选 / 取消全选 按钮
     document.getElementById('sheetSelectAll').addEventListener('click', () => {
         const checkboxes = elements.sheetSelect.querySelectorAll('input[type="checkbox"]');
         const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
         checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
-        handlers.syncSelectedSheets();
+        handlers.syncPendingSheets();  // 只更新临时状态，不立即预览
         document.getElementById('sheetSelectAll').textContent = allChecked ? '全选' : '取消全选';
     });
     
@@ -76,6 +71,23 @@ function init() {
             elements.sendBtn.disabled = !state.sessionId;
         });
     });
+
+    // Sheet 选择器的事件绑定（确认/取消按钮使用事件委托）
+    elements.sheetSelect.addEventListener('click', (e) => {
+        if (e.target.id === 'sheetConfirmBtn') {
+            handlers.handleSheetConfirm();
+        } else if (e.target.id === 'sheetCancelBtn') {
+            handlers.handleSheetCancel();
+        }
+    });
+
+    // 复选框变化只更新临时状态
+    elements.sheetSelect.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            handlers.syncPendingSheets();
+        }
+    });
+
 }
 
 // 启动应用

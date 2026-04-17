@@ -129,5 +129,36 @@ export const handlers = {
             utils.setLoading(false);
             elements.sendBtn.disabled = false;
         }
+    },
+
+// 新增方法：处理 Sheet 确认
+    async handleSheetConfirm() {
+        const selected = this.getSelectedSheets();
+        if (selected.length === 0) {
+            alert('请至少选择一个 Sheet');
+            return;
+        }
+        state.currentSheets = [...selected];  // 确认保存到当前状态
+        ui.addMessage(`📊 已选择工作表: ${selected.join(', ')}`, 'system');
+        
+        // 可选：发送到后端
+        // await api.confirmSheets(state.sessionId, state.currentSheets);
+    },
+
+    // 新增方法：处理 Sheet 取消
+    handleSheetCancel() {
+        // 取消时：清空临时选择，恢复之前的确认状态
+        const checkboxes = elements.sheetSelect.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            cb.checked = state.currentSheets.includes(cb.value);
+        });
+        ui.addMessage('❌ 已取消选择', 'system');
+    },
+
+    // 修改：复选框变化只更新临时状态，不立即触发预览
+    syncPendingSheets() {
+        state.pendingSheets = this.getSelectedSheets();
     }
+
 };
+

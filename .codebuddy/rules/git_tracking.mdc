@@ -1,0 +1,9 @@
+---
+description: 
+alwaysApply: true
+enabled: true
+updatedAt: 2026-04-17T08:41:29.927Z
+provider: 
+---
+
+1.每次修改文件，自动追踪变化，提交git add和commit（写修改了什么内容），并且推送到远程；2.如果是用户自己改的，先根据修改更新文档，再执行git操作。
